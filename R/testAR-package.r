@@ -21,7 +21,7 @@ qqplot.data <- function (vec)
 
 
 
-load("../data/dat.rdata")
+data("dat.rdata")
 
 dat <- reshape2:::melt.data.frame(raw, id.vars=c("type", "time"), variable.name="measurement", value.name="uptake")
 
