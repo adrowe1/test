@@ -3,7 +3,7 @@
 #' @name testAR
 #' @docType package
 
-
+library( "ggplot2" )
 
 qqplot.data <- function (vec) 
 {
