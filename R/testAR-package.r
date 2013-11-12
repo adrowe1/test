@@ -21,7 +21,8 @@ qqplot.data <- function (vec)
 
 
 
-data("data/dat.rdata")
+
+load("/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake/testAR/data/dat.rdata")
 
 dat <- reshape2:::melt.data.frame(raw, id.vars=c("type", "time"), variable.name="measurement", value.name="uptake")
 
