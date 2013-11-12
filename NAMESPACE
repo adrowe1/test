@@ -1,0 +1,5 @@
+
+export(qqplot.data,
+       plotit,
+       model,
+       model.minimal)
