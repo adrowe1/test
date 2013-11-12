@@ -35,6 +35,7 @@ compare.models <- function ( raw ) {
     anova(model.minimal, model)
 }
 
+                                    
 
 
 
