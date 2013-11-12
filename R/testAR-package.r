@@ -44,6 +44,10 @@ compare.models <- function ( raw ) {
  
 plotit <- function ( raw ) {
         dat <- reshape2:::melt.data.frame(raw, id.vars=c("type", "time"), variable.name="measurement", value.name="uptake")              
+                                                
+        model <- lm(uptake ~time * type, dat) 
+        dat$pred <- predict(model, dat)
+        dat$residuals <- dat$uptake-dat$pred
         
         # ggplot(dat, aes(x=residuals, fill=type)) + geom_histogram(binwidth=3, position="dodge")
         ggplot(dat, aes(x=time*2, y=residuals, colour=type) ) + geom_point() + geom_smooth()
