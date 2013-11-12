@@ -8,3 +8,4 @@ Author: Alexander Rowe <a.rowe1@gmail.com>
 Depends: R (>= 2.11.0)
 License: MIT
 LazyLoad: yes
+Imports: ggplot2
