@@ -1,0 +1,1576 @@
+head(simplify)
+n<-5
+n^(n+1)-(n-1)
+inputpath
+rawdata$sex<-as.character(rawdata$sex)#
+rawdata$sex[rawdata$sex=="1"]<-"male"#
+rawdata$sex[rawdata$sex=="0"]<-"female"#
+#
+agegroups<-rawdata$sex#
+agegroups[rawdata$age>0 & rawdata$age<=3]<-3#
+agegroups[rawdata$age>3 & rawdata$age<=6]<-6#
+agegroups[rawdata$age>6 & rawdata$age<=9]<-9#
+agegroups[rawdata$age>9 & rawdata$age<=12]<-12#
+agegroups[rawdata$age>12 & rawdata$age<=15]<-15#
+agegroups[rawdata$age>15 & rawdata$age<=18]<-18#
+agegroups[rawdata$age>18 & rawdata$age<=21]<-21#
+agegroups[rawdata$age>21 & rawdata$age<=24]<-24#
+agegroups[rawdata$age>24 & rawdata$age<=90]<-30#
+#
+rawdata<-cbind(rawdata, agegroups)
+rawdata$creatinine<-rawdata$creatinine*1000
+qplot(creatinine, CRE, data=rawdata, colour=pH) + facet(~ agegroups)
+rawdata<-read.table(inputpath, sep=",", header=TRUE)
+rawdata$sex<-as.character(rawdata$sex)#
+rawdata$sex[rawdata$sex=="1"]<-"male"#
+rawdata$sex[rawdata$sex=="0"]<-"female"#
+#
+agegroups<-rawdata$age#
+agegroups[rawdata$age>0 & rawdata$age<=3]<-3#
+agegroups[rawdata$age>3 & rawdata$age<=6]<-6#
+agegroups[rawdata$age>6 & rawdata$age<=9]<-9#
+agegroups[rawdata$age>9 & rawdata$age<=12]<-12#
+agegroups[rawdata$age>12 & rawdata$age<=15]<-15#
+agegroups[rawdata$age>15 & rawdata$age<=18]<-18#
+agegroups[rawdata$age>18 & rawdata$age<=21]<-21#
+agegroups[rawdata$age>21 & rawdata$age<=24]<-24#
+agegroups[rawdata$age>24 & rawdata$age<=90]<-30#
+#
+rawdata<-cbind(rawdata, agegroups)#
+rawdata$creatinine<-rawdata$creatinine*1000
+quartz(width=10, height=6.5)
+qplot(creatinine, CRE, data=rawdata, colour=pH) + facet_grid(~ agegroups) + geom_smooth(method="lm")
+qplot(creatinine, CRE, data=rawdata, colour=pH) + facet_grid(~ agegroups) + geom_smooth(method="lm",formula = y ~ poly(x, 2))
+qplot(creatinine, CRE, data=rawdata, colour=pH) + facet_grid(~ agegroups) + geom_smooth(method="lm",formula = y ~ x+0)
+qplot(creatinine, CRE, data=rawdata, colour=pH. alpha = I(1/4)) + facet_grid(~ agegroups) + geom_smooth(method="lm",formula = y ~ x+0)
+qplot(creatinine, CRE, data=rawdata, colour=pH, alpha = I(1/4)) + facet_grid(~ agegroups) + geom_smooth(method="lm",formula = y ~ x+0)
+qplot(creatinine, CRE, data=rawdata, colour=pH, alpha = I(1/4)) + facet_grid(~ agegroups) + geom_smooth(method="lm",formula = y ~ x+0)+ opts(axis.text.x=theme_text(angle=90))
+qplot(creatinine, CRE, data=rawdata, colour=pH, alpha = I(0.4)) + facet_grid(~ agegroups) + geom_smooth(method="lm",formula = y ~ x+0)+ opts(axis.text.x=theme_text(angle=90))
+qplot(creatinine, CRE, data=rawdata, colour=pH, alpha = I(0.4), size=GAA) + facet_grid(~ agegroups) + geom_smooth(method="lm",formula = y ~ x+0)+ opts(axis.text.x=theme_text(angle=90))
+library(FactoMineR)#
+wine = read.table("http://factominer.free.fr/book/wine.csv",header=TRUE,row.names=1,sep=";")#
+colnames(wine)=c("1S.Michaud","2S.Renaudie","3S.Trotignon","4S.Buisse","5S.BuisseCristal","6C.AubSilex","7C.Aub.Marigny","8C.FontDomaine","9C.FontBrûlés","10C.FontCoteaux","Somme")#
+res.ca=CA(wine,col.sup=11,row.sup=nrow(wine))#
+barplot(res.ca$eig[,1],main="Valeurs propres",names.arg=1:nrow(res.ca$eig))#
+round(res.ca$eig,3)
+wine = read.table("http://factominer.free.fr/book/wine.csv",header=TRUE,row.names=1,sep=";")
+wine = read.table("http://factominer.free.fr/book/wine.csv",header=TRUE,row.names=1,sep=";", encoding="latin1")
+colnames(wine)=c("1S.Michaud","2S.Renaudie","3S.Trotignon","4S.Buisse","5S.BuisseCristal","6C.AubSilex","7C.Aub.Marigny","8C.FontDomaine","9C.FontBrûlés","10C.FontCoteaux","Somme")#
+res.ca=CA(wine,col.sup=11,row.sup=nrow(wine))#
+barplot(res.ca$eig[,1],main="Valeurs propres",names.arg=1:nrow(res.ca$eig))#
+round(res.ca$eig,3)
+tea <- read.table("http://factominer.free.fr/book/tea.csv",header=TRUE,sep=";")
+head(tea)
+summary(tea)#
+res.mca<-MCA(tea, quanti.sup=22, quali.sup=c(19:21,23:36))#
+plot(res.mca,invisible=c("var","quali.sup"),cex=0.7)#
+plot(res.mca,invisible=c("ind","quali.sup"))#
+plot(res.mca,invisible="quali.sup")#
+plot(res.mca,invisible="ind")#
+plot(res.mca,invisible=c("ind","var"))#
+#
+round(res.mca$eig,2)#
+lapply(dimdesc(res.mca),lapply,round,4)#
+lapply(dimdesc(res.mca),lapply,signif,3)#
+#
+plotellipses(res.mca,keepvar=c("relaxant","restaurant","profession","place.of.purchase"))#
+#
+res.mca <- MCA(tea, quanti.sup=22, quali.sup=c(19:21,23:36), graph=FALSE)#
+new.data <- cbind.data.frame(tea[,11],res.mca$ind$coord)#
+res.pca <- PCA(new.data,quali.sup=1,scale=FALSE,graph=FALSE)#
+res.pca$eig[1:5,]=res.mca$eig[1:5,]#
+concat.data <- cbind.data.frame(tea[,11],res.mca$ind$coord)#
+ellipse.coord <- coord.ellipse(concat.data,bary=TRUE)#
+plot.PCA(res.pca, habillage=1, ellipse=ellipse.coord, cex=0.8,label="none")#
+#
+catdes(tea, num.var = 18)
+?MCA
+head(tea[22])
+head(rawdata)
+MCA(rawdata, quanti.sup=c(3,6,7), quali.sup=2)
+mac<-MCA(rawdata, quanti.sup=c(3), quali.sup=2)
+500E9
+75000/5e11
+500E9/75000
+20e6/3
+5*75000
+5*75000/100e9
+5*75000/100e9*1500
+500E9/75
+ans
+.Last.value
+.Last.value/3e5
+dat<-read.table("/Users/alexarow/Documents/Rikshospitalet/genome_repeats_analysis/writing/RotarodSTATS/article/Vekt.txt", header=TRUE, sep=",")#
+#
+maxage<-160#
+minage<-0#
+males<-subset(dat, M.F=="M")#
+maleMedox<-subset(males, Vann=="Meox" & age>minage & age<maxage)#
+maleKontr<-subset(males, Vann=="Kontr" & age>minage & age<maxage)#
+females<-subset(dat, M.F=="F")#
+femaleMedox<-subset(females, Vann=="Meox" & age>minage & age<maxage)#
+femaleKontr<-subset(females, Vann=="Kontr" & age>minage & age<maxage)#
+length(males[,1])#
+length(females[,1])#
+length(maleMedox[,1])#
+length(femaleMedox[,1])#
+length(maleKontr[,1])#
+length(femaleKontr[,1])#
+#
+length(males[,1])-length(maleMedox[,1])-length(maleKontr[,1])#
+length(females[,1])-length(femaleMedox[,1])-length(femaleKontr[,1])#
+plot(femaleMedox$age, femaleMedox$weight, col="pink", xlim=c(0,180), ylim=c(0,35), xlab="Age (days)", ylab="Weight (g)", main="Weight vs age for all mice")#
+points(femaleKontr$age, femaleKontr$weight, col="purple", pch=2)#
+points(maleMedox$age, maleMedox$weight, col="cyan", pch=3)#
+points(maleKontr$age, maleKontr$weight, col="blue", pch=4)#
+legend("bottomright", inset=.05, title="Categories",#
+    c("Female Anthocyanin","Female Control","Male Anthocyanin", "Male Control"), col=c("pink", "purple", "cyan", "blue"), pch=c(1,2,3,4), horiz=FALSE)#
+all<-rbind(femaleKontr, femaleMedox, maleKontr, maleMedox)#
+levels(all$Vann)[2]<-"Medox"#
+levels(all$Vann)[1]<-"Control"#
+colnames(all)<-c("Mus", "foedt", "Gender", "far", "Treatment", "Age", "Weight")#
+levels(all$Gender)[1]<-"Female"#
+levels(all$Gender)[2]<-"Male"#
+quartz(width=10)#
+qplot(Age/7, Weight, data=all) + facet_grid(Gender ~ Treatment) + geom_smooth(method="loess")
+qplot(Age/7, Weight, data=all) + facet_grid(Gender ~ Treatment) + geom_smooth(method="loess")
+qplot(Age/7, Weight, data=all) + facet_grid( ~ Treatment) + geom_smooth(method="loess")
+qplot(Age/7, Weight, data=all, colour=Gender) + facet_grid( ~ Treatment) + geom_smooth(method="loess")
+qplot(Age/7, Weight, data=all, colour=Treatment) + facet_grid( ~ Gender) + geom_smooth(method="loess")
+library(colorspace)#
+ df <- data.frame(x=letters[1:8])p <- qplot(data=df, x, 1, geom="bar", stat="identity", fill=x) +#
+ opts(#
+ legend.position = "none",#
+ axis.title.x = theme_blank(),#
+ axis.title.y = theme_blank(),#
+ axis.text.x = theme_blank(),#
+ axis.text.y = theme_blank(),#
+ axis.ticks = theme_blank(),#
+ title="Default colours")
+df
+df <- data.frame(x=letters[1:8])p <- qplot(data=df, x, 1, geom="bar", stat="identity", fill=x) + opts( legend.position = "none", axis.title.x = theme_blank(), axis.title.y = theme_blank(), axis.text.x = theme_blank(), axis.text.y = theme_blank(),axis.ticks = theme_blank(), title="Default colours")
+df <- data.frame(x=letters[1:8])#
+p <- qplot(data=df, x, 1, geom="bar", stat="identity", fill=x) + opts( legend.position = "none", axis.title.x = theme_blank(), axis.title.y = theme_blank(), axis.text.x = theme_blank(), axis.text.y = theme_blank(),axis.ticks = theme_blank(), title="Default colours")
+p
+blues <- colorRampPalette(c('dark blue', 'light blue'))#
+reds <- colorRampPalette(c('pink', 'dark red'))
+qplot(Age/7, Weight, data=all, colour=Treatment) + facet_grid( ~ Gender) + geom_smooth(method="loess") + scale_fill_manual(values = c(blues(1), reds(1)))
+qplot(Age/7, Weight, data=all, colour=Treatment) + facet_grid( ~ Gender) + geom_smooth(method="loess") + scale_fill_brewer(palette="Set1")
+qplot(Age/7, Weight, data=all, colour=Treatment) + facet_grid( ~ Gender) + geom_smooth(method="loess") + scale_fill_brewer(palette="Spectral")
+qplot(Age/7, Weight, data=all, aes(colour=Treatment)) + facet_grid( ~ Gender) + geom_smooth(method="loess") + scale_fill_manual(values=c("red", "blue", "green"))
+qplot(Age/7, Weight, data=all, colour=Treatment) + facet_grid( ~ Gender) + geom_smooth(method="loess") + scale_fill_manual(values=c("red", "blue", "green"))
+qplot(Age/7, Weight, data=all, colour=Treatment) + facet_grid( ~ Gender) + geom_smooth(method="loess") + scale_colour_manual(values=c("red", "blue", "green"))
+qplot(Age/7, Weight, data=all, colour=Treatment) + facet_grid( ~ Gender) + geom_smooth(method="loess") + scale_colour_manual(values=c("red", "blue", "green", "yellow"))
+qplot(Age/7, Weight, data=all, colour=Treatment) + facet_grid( ~ Gender) + geom_smooth(method="loess") + xlab("Age (weeks)") + ylab("Weight (g)") + scale_colour_manual(values=c("red", "blue"))
+?find
+library(FME)#
+#
+pars <- c(	upO2 = 360, #
+			cons = 80,	#
+			ks = 1,	#
+			D = 1)	#
+n <- 100	#
+dx <- 0.05	#
+dX <- c(dx/2, rep(dx, n-1), dx/2) #
+X <- seq(dx/2, len = n, by = dx) #
+O2fun <- function(pars) {#
+	derivs<-function(t, O2, pars) {#
+		with (as.list(pars),{#
+			Flux <- -D* diff(c(upO2, O2, O2[n]))/dX #
+			dO2 <- -diff(Flux)/dx - cons*O2/(O2 + ks)#
+			return(list(dO2, UpFlux = Flux[1], LowFlux = Flux[n+1])) #
+			})#
+		}#
+	ox <- steady.1D(	y = runif(n), func = derivs, parms = pars,#
+						nspec = 1, positive = TRUE)#
+	data.frame(X = X, O2 = ox$y)#
+}#
+O2dat <- data.frame(x = seq(0.1, 3.5, by = 0.1), #
+y = c(279,260,256,220,200,203,189,179,165,140,138,127,116,109,92,87,78,72,62,55,49,43,35,32,27,20,15,15,10,8,5,3,2,1,0)) #
+O2depth <- cbind(name = "O2", O2dat)	#
+O2flux <- c(UpFlux = 170)	#
+#
+head(O2dat)#
+head(O2depth)
+O2fun2 <- function(pars) {#
+	derivs<-function(t, O2, pars) {#
+		with (as.list(pars),{#
+			Flux <- -D*diff(c(upO2, O2, O2[n]))/dX#
+			dO2 <- -diff(Flux)/dx - cons*O2/(O2 + ks)#
+			return(list(dO2,UpFlux = Flux[1], LowFlux = Flux[n+1]))#
+			})#
+		}#
+		ox <- steady.1D(y = runif(n), func = derivs, parms = pars, nspec = 1,#
+						positive = TRUE, rtol = 1e-8, atol = 1e-10)#
+		list(data.frame(x = X, O2 = ox$y),#
+			UpFlux = ox$UpFlux)#
+	}#
+Objective <- function (P) #
+{#
+	Pars <- pars#
+	Pars[names(P)]<-P#
+	modO2 <- O2fun2(Pars)	#
+	Cost <- modCost(obs = O2depth, model = modO2[[1]], x = "x", y = "y")#
+	modFl <- c(UpFlux = modO2$UpFlux)#
+	Cost <- modCost(obs = O2flux, model = modFl, x = NULL, cost = Cost)#
+	return(Cost)#
+}
+print(system.time( sF<-sensFun(Objective, parms = pars) ))#
+#
+summary(sF)#
+#
+collin(sF)
+collin(sF, parset = c("upO2", "cons", "ks"))#
+#
+print(system.time( Fit <- modFit(p = c(upO2 = 360, cons = 80, ks = 1),#
+	f = Objective, lower = c(0, 0, 0)) ))#
+#
+(SFit<-summary(Fit))
+Pars <- pars
+head(Pars)
+Pars[names(Fit$par)]
+Fit$par
+Pars[names(Fit$par)] <- Fit$par
+modO2 <- O2fun(Pars)
+head(modO2)
+plot(O2depth$y, O2depth$x, ylim = rev(range(O2depth$x)), pch = 18, main = "Oxygen-fitted", xlab = "mmol/m3", ylab = "depth, cm") #
+lines(modO2$O2, modO2$X)
+?as.list
+library(simecol)
+data(chemostat)
+head(chemostat)
+chemostat
+solver(chemostat)
+summary(chemostat)
+cs1 <- chemostat
+cs1
+SPCmod <- function(t, x, parms) {#
+  with(as.list(c(parms, x)), {#
+    import <- sigimp(t)#
+    dS <- import - b*S*P + g*C     #
+    dP <- c*S*P  - d*C*P           #
+    dC <- e*P*C  - f*C             #
+    res <- c(dS, dP, dC)#
+    list(res)#
+  })#
+}#
+parms  <- c(b = 0.0, c = 0.1, d = 0.1, e = 0.1, f = 0.1, g = 0.0)#
+times  <- seq(0, 100, length = 101)#
+signal <- as.data.frame(list(times = times,#
+                            import = rep(0,length(times))))#
+#
+signal$import[signal$times >= 10 & signal$times <= 11] <- 0.2#
+#
+sigimp <- approxfun(signal$times, signal$import, rule = 2)#
+y <- xstart <- c(S = 1, P = 1, C = 1)#
+out <-  lsoda(xstart, times, SPCmod, parms) #
+mf <- par("mfrow")#
+plot(out, main = c("substrate", "producer", "consumer"))#
+plot(out[,"P"], out[,"C"], type = "l", xlab = "producer", ylab = "consumer")#
+par(mfrow = mf)
+fr <- function(x) {   #
+    x1 <- x[1]#
+    x2 <- x[2]#
+    100 * (x2 - x1 * x1)^2 + (1 - x1)^2#
+}#
+grr <- function(x) { #
+    x1 <- x[1]#
+    x2 <- x[2]#
+    c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),#
+       200 *      (x2 - x1 * x1))#
+}#
+optim(c(-1.2,1), fr)#
+(res <- optim(c(-1.2,1), fr, grr, method = "BFGS"))#
+optimHess(res$par, fr, grr)#
+optim(c(-1.2,1), fr, NULL, method = "BFGS", hessian = TRUE)#
+#
+optim(c(-1.2,1), fr, grr, method = "CG")#
+optim(c(-1.2,1), fr, grr, method = "CG", control=list(type=2))#
+optim(c(-1.2,1), fr, grr, method = "L-BFGS-B")
+fr(c(-1.2,1))
+fr(c(1.000260, 1.000506))
+year
+year<- seq(1900,1980,by=10) #
+pop <- c(76.1,92.4,106.5,123.1,132.6,152.3,180.7,204.9,226.5)#
+Ligand_init <- 63#
+Analyte_init <- 0.25*125e-9#
+LigandAnalyte_init <- 0#
+k_a <- 1e6#
+k_d <- 30e-2#
+#
+time <- seq(0, 90, by = 1)#
+#
+response<-(Ligand_init * ((k_a * Analyte_init) / k_d) * (1 - (exp(-((k_a * Analyte_init) + k_d)*time))) + LigandAnalyte_init * (((k_a * Analyte_init) / k_d) + (exp(-((k_a * Analyte_init) + k_d)*time)))) / (1 + ((k_a * Analyte_init) / k_d))#
+#
+response<-response + rnorm(response, sd= 0.1 * sd(response))#
+#
+plot(time, (Ligand_init * ((k_a * Analyte_init) / k_d) * (1 - (exp(-((k_a * Analyte_init) + k_d)*time))) + LigandAnalyte_init * (((k_a * Analyte_init) / k_d) + (exp(-((k_a * Analyte_init) + k_d)*time)))) / (1 + ((k_a * Analyte_init) / k_d)))#
+#
+points(time, response, col="red")#
+#
+fit<-nls(response ~ ((Ligand_init * ((k_a * Analyte_init) / k_d) * (1 - (exp(-((k_a * Analyte_init) + k_d)*time))) + LigandAnalyte_init * (((k_a * Analyte_init) / k_d) + (exp(-((k_a * Analyte_init) + k_d)*time)))) / (1 + ((k_a * Analyte_init) / k_d))), start=list(k_a=1e6, k_d=30e-2), lower=list(k_a=5e3, k_d=10e-5), upper=list(k_a=5e8, k_d=50e-1), algorithm="port")#
+#
+summary(fit)
+fit
+fit$k_a
+fit$data
+coef(fit)
+coef(fit)[1]*3
+modO2
+melt(modO2)
+library(reshape)
+df <- data.frame(x=c(1:10), y1=c(10:1), y2=c(1:10))
+library(reshape2)
+df <- data.frame(x=c(1:10), y1=c(10:1), y2=c(1:10)) #
+ mdf <- melt(df, id.vars="x") #
+ qplot(x, value, group=variable, data=mdf, geom="line")
+head(mdf)
+df <- data.frame(x=c(1:10), y1=c(10:1), y2=c(1:10)) #
+ mdf <- melt(df, id.vars="x") #
+ qplot(x, value, group=variable, data=mdf, geom="line", colour=variable)
+eta<-1.002e-3
+bolt
+k<-1.3806503e-23
+T<-273+25
+r<-1e-6
+4.5e-12*6*pi
+dist^2*6*pi*eta*r/(k*T)
+r<-1e-5
+r<-1e-7
+r<-2e-9
+r<-1e-8
+4.5e-12*6*pi*eta*r/(k*T)
+ln0.4
+ln(exp(1))
+log(exp(1))
+log(0.4)
+log(0.1)
+exp(-0.916)
+exp(-0.416)
+exp(-0.116)
+log(0.2)
+chosen<-1 #
+#
+datasets<-c("neil", "ogg1")#
+datapaths<-c("/Users/alexarow/Documents/Rikshospitalet/genome_repeats_analysis/data/Med_DMSO/older_analysis/Neil1\ med\ DMSO\ alle\ organer.txt", "/Users/alexarow/Documents/Rikshospitalet/genome_repeats_analysis/data/Med_DMSO/older_analysis/Ogg1\ med\ DMSO\ alle\ organer.txt")#
+#
+cutoff.PC<-10#
+#
+primer.length<-86#
+#
+nt.range.lo<-400#
+nt.range.hi<-600#
+#
+define.main.allele<-2#
+#
+path.info<-"/Users/alexarow/Documents/Rikshospitalet/genome_repeats_analysis/data/Med_DMSO/older_analysis/Oversikt.csv"#
+#
+for (i in 1:length(datasets)) {#
+	name<-paste("path", datasets[i], sep=".")#
+	assign(name,datapaths[i])#
+}#
+get.main.allele<-function(data, lower.limit, upper.limit, cutoff, primer) {#
+	unique.mice<<-as.vector(unique(data.original$Sample.File.Name))#
+	id.ear.3wk<-unique.mice[grep("oe-3u",unique.mice)]#
+	summary.ear.3wk<-data.frame(mouse.number=numeric(0),largest.peak=numeric(0),instability.index=numeric(0),filename=character(0))#
+	for (i in 1:length(id.ear.3wk)) {#
+		data.mouse<-subset(data, Sample.File.Name==id.ear.3wk[i])#
+		data.relevant<-subset(data.mouse, Size > lower.limit & Size < upper.limit )#
+		data.maxpeak<-max(data.relevant$Area)#
+		data.threshold<-data.maxpeak*cutoff/100#
+		data.relevant<-subset(data.relevant, Area > data.threshold )#
+		index.mainallele<-which.max(data.relevant$Area)#
+		data.rescaled<-data.relevant$Area/sum(data.relevant$Area)#
+		to.mainallele<-(data.relevant$Size-data.relevant$Size[index.mainallele])/3#
+		instability.index<-sum(data.rescaled*to.mainallele)#
+		largest.peak<-(data.relevant$Size[index.mainallele]-primer)/3#
+		filename<-id.ear.3wk[i]#
+		chopFname<-as.data.frame(strsplit(as.character(filename), "_"))#
+		mouseDetailsAll<-as.character(chopFname[2,1])#
+		chopFname<-as.data.frame(strsplit(mouseDetailsAll, "-"))#
+		mouseDetails<-as.character(chopFname[1,1])#
+		mouseAge<-as.character(chopFname[2,1])#
+		mouse.number<-as.integer(gsub('[[:alpha:]]', '', mouseDetails))#
+		filename<-as.character(filename)#
+		output<-data.frame(mouse.number,largest.peak,instability.index, filename)#
+		summary.ear.3wk<-rbind(summary.ear.3wk,output)#
+	}#
+	summary.ear.3wk#
+}#
+info.mouse.organ<-function(unique.mice) {#
+	unique.mice[grep("oe-3u",unique.mice)]<-""#
+	unique.mice<-unique.mice[unique.mice!=""]#
+	summary.mouse.organ<-data.frame(mouse.number=numeric(0),organ=character(0), filename=character(0))#
+	for (i in 1:length(unique.mice)) {#
+		filename<-unique.mice[i]#
+		details.number.organ<-strsplit(strsplit(as.character(filename), "_")[[1]][2], "-")[[1]][1]#
+		mouse.number<-as.integer(gsub('[[:alpha:]]', '',details.number.organ))#
+		mouse.organ<-tolower(gsub('[[:digit:]]', '',details.number.organ))#
+		output<-data.frame(mouse.number,mouse.organ,filename)#
+		summary.mouse.organ<-rbind(summary.mouse.organ,output)#
+	}#
+	summary.mouse.organ#
+}#
+info.organs<-function(summary.mouse.organ){#
+	organ.abbreviations.local<-sort(as.character(unique(summary.mouse.organ$mouse.organ)))#
+	organ.abbreviations.all<-c("ce", "co", "lv", "milt", "ny", "ob", "oe", "sp", "str", "te")#
+	organ.names<-c("Cerebellum", "Cortex", "Liver", "Spleen", "Kidney", "Olfactory bulb", "Ear", "Sperm", "Striatum", "Testis")#
+	lookup.organs<-data.frame(organ.abbreviations.all, organ.names)#
+	logic<-rep(FALSE, length(organ.abbreviations.all))#
+	for (i in 1:length(organ.abbreviations.local)) {#
+		logic<-logic|lookup.organs$organ.abbreviations.all==organ.abbreviations.local[i]#
+	}#
+	lookup.organs[logic,]#
+}#
+instabilities.organ<-function(organ, data, summary.mouse.organ, data.info, summary.main.allele, lower.limit, upper.limit, cutoff, primer) {#
+	process.mice<-subset(summary.mouse.organ, mouse.organ==as.character(organ))$mouse.number#
+	process.filenames<-subset(summary.mouse.organ, mouse.organ==as.character(organ))$filename#
+	data.instability.male.ko<-c()#
+	data.instability.male.wt<-c()#
+	data.instability.female.ko<-c()#
+	data.instability.female.wt<-c()#
+	axis.instability.male.ko<-c()#
+	axis.instability.male.wt<-c()#
+	axis.instability.female.ko<-c()#
+	axis.instability.female.wt<-c()#
+	relative.instability.male.ko<-c()#
+	relative.instability.male.wt<-c()#
+	relative.instability.female.ko<-c()#
+	relative.instability.female.wt<-c()#
+	for (i in 1:length(process.mice)) {#
+		mouse.genotype<-subset(data.info, Mouse.number==process.mice[i])$genotype#
+		mouse.gender<-subset(data.info, Mouse.number==process.mice[i])$gender#
+		mouse.3wk.filename<-subset(summary.main.allele, mouse.number==process.mice[i])$filename#
+		if(tolower(mouse.genotype)=="wt") tmp.geno<-1 else tmp.geno<-0#
+		if(tolower(mouse.gender)=="m") tmp.gend<-1 else tmp.gend<-3#
+		case<-tmp.geno+tmp.gend#
+		tmp<-as.matrix(subset(summary.main.allele, mouse.number==process.mice[i]))#
+		main.allele<-as.double(tmp[2])+as.double(tmp[3])#
+		base.mouse<-subset(data, Sample.File.Name==as.character(mouse.3wk.filename))#
+		base.relevant<-subset(base.mouse, Size > lower.limit & Size < upper.limit )#
+		base.maxpeak<-max(base.relevant$Area)#
+		base.threshold<-base.maxpeak*cutoff/100#
+		base.relevant<-subset(base.relevant, Area > base.threshold )#
+		base.rescaled<-base.relevant$Area/sum(base.relevant$Area)#
+		base.mainallele<-(base.relevant$Size-primer)/3-main.allele#
+		data.mouse<-subset(data, Sample.File.Name==as.character(process.filenames[i]))#
+		data.relevant<-subset(data.mouse, Size > lower.limit & Size < upper.limit )#
+		data.maxpeak<-max(data.relevant$Area)#
+		data.threshold<-data.maxpeak*cutoff/100#
+		data.relevant<-subset(data.relevant, Area > data.threshold )#
+		data.rescaled<-data.relevant$Area/sum(data.relevant$Area)#
+		to.mainallele<-(data.relevant$Size-primer)/3-main.allele#
+		start.separation<-round(base.mainallele[1]-to.mainallele[1])#
+		ifelse(start.separation>=0, {#
+				carrier<-rep(0, length(to.mainallele))#
+				carrier[(1+start.separation):(start.separation+length(base.mainallele))]<-base.rescaled },#
+			{ 	extend.axis<-seq(start.separation,-1, 1)+to.mainallele[1]#
+				extend.data<-rep(0, length(extend.axis))#
+				to.mainallele<-c(extend.axis, to.mainallele)#
+				data.rescaled<-c(extend.data, data.rescaled)#
+				carrier<-rep(0, length(to.mainallele))#
+				carrier[1:length(base.mainallele)]<-base.rescaled }	)#
+		data.change<-data.rescaled-carrier#
+		switch(case, #
+			data.instability.male.ko<-c(data.instability.male.ko, data.rescaled),#
+			data.instability.male.wt<-c(data.instability.male.wt, data.rescaled), #
+			data.instability.female.ko<-c(data.instability.female.ko, data.rescaled), #
+			data.instability.female.wt<-c(data.instability.female.wt, data.rescaled)#
+		)#
+		switch(case, #
+			axis.instability.male.ko<-c(axis.instability.male.ko,to.mainallele),#
+			axis.instability.male.wt<-c(axis.instability.male.wt,to.mainallele), #
+			axis.instability.female.ko<-c(axis.instability.female.ko,to.mainallele), #
+			axis.instability.female.wt<-c(axis.instability.female.wt,to.mainallele) #
+		)	#
+		switch(case, #
+			relative.instability.male.ko<-c(relative.instability.male.ko,data.change),#
+			relative.instability.male.wt<-c(relative.instability.male.wt,data.change), #
+			relative.instability.female.ko<-c(relative.instability.female.ko,data.change), #
+			relative.instability.female.wt<-c(relative.instability.female.wt,data.change) #
+		)#
+	}#
+	organ.summary.male.ko<<-data.frame(axis.instability.male.ko, data.instability.male.ko)#
+	organ.summary.male.wt<<-data.frame(axis.instability.male.wt, data.instability.male.wt)#
+	organ.summary.female.ko<<-data.frame(axis.instability.female.ko, data.instability.female.ko)#
+	organ.summary.female.wt<<-data.frame(axis.instability.female.wt, data.instability.female.wt)#
+	tmp1<-organ.summary.female.ko#
+	names(tmp1)<-c("axis.instability.ko", "data.instability.ko")#
+	tmp2<-organ.summary.male.ko#
+	names(tmp2)<-c("axis.instability.ko", "data.instability.ko")#
+	tmp3<-organ.summary.female.wt#
+	names(tmp3)<-c("axis.instability.wt", "data.instability.wt")#
+	tmp4<-organ.summary.male.wt#
+	names(tmp4)<-c("axis.instability.wt", "data.instability.wt")#
+	organ.summary.ko<<-rbind(tmp1, tmp2)#
+	organ.summary.wt<<-rbind(tmp3, tmp4)#
+	organ.change.male.ko<<-data.frame(axis.instability.male.ko, relative.instability.male.ko)#
+	organ.change.male.wt<<-data.frame(axis.instability.male.wt, relative.instability.male.wt)#
+	organ.change.female.ko<<-data.frame(axis.instability.female.ko, relative.instability.female.ko)#
+	organ.change.female.wt<<-data.frame(axis.instability.female.wt, relative.instability.female.wt)#
+	tmp1<-organ.change.female.ko#
+	names(tmp1)<-c("axis.instability.ko", "relative.instability.ko")#
+	tmp2<-organ.change.male.ko#
+	names(tmp2)<-c("axis.instability.ko", "relative.instability.ko")#
+	tmp3<-organ.change.female.wt#
+	names(tmp3)<-c("axis.instability.wt", "relative.instability.wt")#
+	tmp4<-organ.change.male.wt#
+	names(tmp4)<-c("axis.instability.wt", "relative.instability.wt")#
+	organ.change.ko<<-rbind(tmp1, tmp2)#
+	organ.change.wt<<-rbind(tmp3, tmp4)#
+}#
+bestfit.data<-function(organ.change){#
+	axis.all<-organ.change[,1]#
+	data.all<-organ.change[,2]#
+	axis.min<-min(axis.all)#
+	axis.max<-max(axis.all)#
+	total.points<-floor(length(axis.all)/10)#
+	limits<-seq(axis.min,axis.max, (axis.max-axis.min)/total.points)#
+	limits[length(limits)]<-axis.max#
+	axis<-c()#
+	value<-c()#
+	for (i in 1:(length(limits)-1)) {#
+		axis[i]<-mean(axis.all[axis.all>limits[i] & axis.all<=limits[i+1]])#
+		value[i]<-mean(data.all[axis.all>limits[i] & axis.all<=limits[i+1]])#
+	}#
+	bestfit<-data.frame(axis, value)#
+}#
+reform.data.boxes<-function(organ.summary) {#
+	sizes<-round(organ.summary[,1])#
+	contractions<-abs(sizes[sizes<0])#
+	expansions<-sizes[sizes>0]#
+	binned.contractions<-hist(contractions, breaks=0.5:(max(contractions)+0.5), plot=FALSE)#
+	binned.expansions<-hist(expansions, breaks=0.5:(max(expansions)+0.5), plot=FALSE)#
+	counts.contractions<-binned.contractions$counts#
+	counts.expansions<-binned.expansions$counts#
+	breaks.contractions<-binned.contractions$mids#
+	breaks.expansions<-binned.expansions$mids	#
+	group.contractions<-sort(unique(counts.contractions))#
+	group.expansions<-sort(unique(counts.expansions))#
+	size.contractions<-c()#
+	for (i in 1:length(group.contractions)) {#
+		size<-max(breaks.contractions[counts.contractions==group.contractions[i]])#
+		size.contractions<-c(size.contractions,size)#
+	}#
+	number.contractions<-c(group.contractions[1], diff(group.contractions))#
+	all.contractions<-c()#
+	for (i in 1:length(size.contractions)) {#
+		tmp<-rep(size.contractions[i], number.contractions[i])#
+		all.contractions<-c(all.contractions, tmp)#
+	}#
+	mean.contractions<-mean(all.contractions)#
+	sd.contractions<-sd(all.contractions, na.rm=TRUE)#
+	group.expansions<-sort(unique(counts.expansions))#
+	group.expansions<-sort(unique(counts.expansions))#
+	size.expansions<-c()#
+	for (i in 1:length(group.expansions)) {#
+		size<-max(breaks.expansions[counts.expansions==group.expansions[i]])#
+		size.expansions<-c(size.expansions,size)#
+	}#
+	number.expansions<-c(group.expansions[1], diff(group.expansions))#
+	number.expansions<-c(group.expansions[1], diff(group.expansions))#
+	all.expansions<-c()#
+	for (i in 1:length(size.expansions)) {#
+		tmp<-rep(size.expansions[i], number.expansions[i])#
+		all.expansions<-c(all.expansions, tmp)#
+	}#
+	mean.expansions<-mean(all.expansions)#
+	sd.expansions<-sd(all.expansions, na.rm=TRUE)#
+	data.frame(mean.contractions, sd.contractions, mean.expansions, sd.expansions)#
+}#
+data.original<-read.table(datapaths[chosen], sep="\t", header=TRUE)#
+#
+data.info<-read.table(path.info, sep=",", header=TRUE)#
+#
+switch(chosen, data.info<-subset(data.info, GROUP=="NEIL"), data.info<-subset(data.info, GROUP=="OGG"))#
+summary.main.allele<-get.main.allele(data.original, nt.range.lo, nt.range.hi, cutoff.PC, primer.length )#
+summary.mouse.organ<-info.mouse.organ(unique.mice)#
+lookup.organs<-info.organs(summary.mouse.organ)#
+run.organs<-lookup.organs$organ.abbreviations.all#
+#
+simple.data.male.ko<-data.frame(mean.contractions=numeric(0), sd.contractions=numeric(0), mean.expansions=numeric(0), sd.expansions=numeric(0))#
+simple.data.male.wt<-data.frame(mean.contractions=numeric(0), sd.contractions=numeric(0), mean.expansions=numeric(0), sd.expansions=numeric(0))#
+simple.data.female.ko<-data.frame(mean.contractions=numeric(0), sd.contractions=numeric(0), mean.expansions=numeric(0), sd.expansions=numeric(0))#
+simple.data.female.wt<-data.frame(mean.contractions=numeric(0), sd.contractions=numeric(0), mean.expansions=numeric(0), sd.expansions=numeric(0))#
+simple.data.wt<-data.frame(mean.contractions=numeric(0), sd.contractions=numeric(0), mean.expansions=numeric(0), sd.expansions=numeric(0))#
+simple.data.ko<-data.frame(mean.contractions=numeric(0), sd.contractions=numeric(0), mean.expansions=numeric(0), sd.expansions=numeric(0))#
+for (i in 1:length(run.organs)) {#
+	organ.summary<-instabilities.organ(run.organs[i], data.original, summary.mouse.organ, data.info, summary.main.allele, nt.range.lo, nt.range.hi, cutoff.PC, primer.length)#
+	legend.KO<-paste(toupper(substring(datasets[chosen], 1,1)), substring(datasets[chosen], 2), sep="", collapse=" ")#
+	legend.KO<-paste(legend.KO, "KO" , sep=" ")#
+	xrange<-c(-10,35)#
+	yrange<-c(-0.15,0.15)#
+	frame()#
+	par(fig=c(0,1,0.4,1), new=TRUE)#
+	plot(organ.summary.male.ko, type="p", col = "steelblue1", pch=1, cex=0.3, xlim=xrange, ylim=yrange, xlab="", ylab="normalized peak size")#
+	abline(v=0,h=0, col="gray60")#
+	points(organ.summary.male.wt, type="p", col = "gray80", pch=1, cex=0.3)#
+	lines(stats::lowess(organ.summary.male.wt, f=0.1), col="gray50")#
+	lines(stats::lowess(organ.summary.male.ko, f=0.1), col="steelblue3")#
+	text(10,0.15, "MALE")#
+	legend("bottomright", c(legend.KO, "WT", paste("Average", legend.KO, sep=" "), "Average WT"), pch=1, lty=c(0,0,1,1), pt.cex=c(1,1,0,0), col=c("steelblue1", "gray80", "steelblue3", "gray50"))#
+	par(fig=c(0,1,0,0.6), new=TRUE)#
+	plot(organ.summary.female.ko, type="p", col = "lightpink1", pch=1, cex=0.3, xlim=xrange, ylim=yrange, xlab="distance from main allele (triplets)", ylab="normalized peak size")#
+	abline(v=0,h=0, col="gray60")#
+	points(organ.summary.female.wt, type="p", col = "gray80", pch=1, cex=0.3)#
+	lines(stats::lowess(organ.summary.female.wt, f=0.1), col="gray50")#
+	lines(stats::lowess(organ.summary.female.ko, f=0.1), col="lightpink3")#
+	text(10,0.15, "FEMALE")#
+	legend("bottomright", c(legend.KO, "WT", paste("Average", legend.KO, sep=" "), "Average WT"), pch=1, lty=c(0,0,1,1), pt.cex=c(1,1,0,0), col=c("lightpink1", "gray80", "lightpink3", "gray50"))#
+	par(fig=c(0,1,0,1), new=TRUE)#
+	title(main=as.character(subset(lookup.organs, organ.abbreviations.all==run.organs[i])$organ.names))#
+	frame() #
+	par(fig=c(0,1,0.4,1), new=TRUE)#
+	plot(organ.change.male.ko, type="p", col = "steelblue1", pch=1, cex=0.3, xlim=xrange, ylim=yrange, xlab="", ylab="")#
+	abline(v=0,h=0, col="gray60")#
+	points(organ.change.male.wt, type="p", col = "gray80", pch=1, cex=0.3)#
+	lines(stats::lowess(organ.change.male.wt, f=0.1), col="gray50")#
+	lines(stats::lowess(organ.change.male.ko, f=0.1), col="steelblue3")#
+	text(10,0.15, "MALE")#
+	legend("bottomright", c(legend.KO, "WT", paste("Average", legend.KO, sep=" "), "Average WT"), pch=1, lty=c(0,0,1,1), pt.cex=c(1,1,0,0), col=c("steelblue1", "gray80", "steelblue3", "gray50"))#
+	par(fig=c(0,1,0,0.6), new=TRUE)#
+	plot(organ.change.female.ko, type="p", col = "lightpink1", pch=1, cex=0.3, xlim=xrange, ylim=yrange, xlab="distance from main allele (triplets)", ylab="")#
+	abline(v=0,h=0, col="gray60")#
+	points(organ.change.female.wt, type="p", col = "gray80", pch=1, cex=0.3, xlab="", ylab="")#
+	lines(stats::lowess(organ.change.female.wt, f=0.1), col="gray50")#
+	lines(stats::lowess(organ.change.female.ko, f=0.1), col="lightpink3")#
+	text(10,0.15, "FEMALE")#
+	legend("bottomright", c(legend.KO, "WT", paste("Average", legend.KO, sep=" "), "Average WT"), pch=1, lty=c(0,0,1,1), pt.cex=c(1,1,0,0), col=c("lightpink1", "gray80", "lightpink3", "gray50"))#
+	par(fig=c(0,1,0,1), new=TRUE)#
+	title(main=as.character(subset(lookup.organs, organ.abbreviations.all==run.organs[i])$organ.names),ylab="change in peak size relative to 3 week ear")#
+	simple.data.male.ko<-rbind(simple.data.male.ko,reform.data.boxes(organ.summary.male.ko))#
+	simple.data.male.wt<-rbind(simple.data.male.wt,reform.data.boxes(organ.summary.male.wt))#
+	simple.data.female.ko<-rbind(simple.data.female.ko,reform.data.boxes(organ.summary.female.ko))#
+	simple.data.female.wt<-rbind(simple.data.female.wt,reform.data.boxes(organ.summary.female.wt))#
+	simple.data.ko<-rbind(simple.data.ko,reform.data.boxes(organ.summary.ko))#
+	simple.data.wt<-rbind(simple.data.wt,reform.data.boxes(organ.summary.wt))#
+}#
+frame()#
+plot(-100,-100,xlim=c(0,180), ylim=c(0,(length(run.organs)+0.5)), axes=FALSE, xlab="", ylab="")#
+for (i in 1:length(run.organs)){#
+	m.ko<-simple.data.male.ko[i,]#
+	m.wt<-simple.data.male.wt[i,]#
+	f.ko<-simple.data.female.ko[i,]#
+	f.wt<-simple.data.female.wt[i,]#
+	rect(10-m.ko[[1]],i-0.5,10,i, col="gray90")#
+	segments((10-m.ko[[1]]),i-0.25,(10-m.ko[[1]]-m.ko[[2]]),i-0.25)#
+	segments((10-m.ko[[1]]-m.ko[[2]]),i-0.35,(10-m.ko[[1]]-m.ko[[2]]),i-0.15)#
+	rect(10,i-0.5,10+m.ko[[3]],i, col="gray10")#
+	segments(10+m.ko[[3]],i-0.25,10+m.ko[[3]]+m.ko[[4]],i-0.25)#
+	segments(10+m.ko[[3]]+m.ko[[4]],i-0.35,10+m.ko[[3]]+m.ko[[4]],i-0.15)#
+	rect(55-m.wt[[1]],i-0.5,55,i, col="gray90")#
+	segments(55-m.wt[[1]],i-0.25,55-m.wt[[1]]-m.wt[[2]],i-0.25)#
+	segments(55-m.wt[[1]]-m.wt[[2]],i-0.35,55-m.wt[[1]]-m.wt[[2]],i-0.15)#
+	rect(55,i-0.5,55+m.wt[[3]],i, col="gray10")#
+	segments(55+m.wt[[3]],i-0.25,55+m.wt[[3]]+m.wt[[4]],i-0.25)#
+	segments(55+m.wt[[3]]+m.wt[[4]],i-0.35,55+m.wt[[3]]+m.wt[[4]],i-0.15)#
+	rect(100-f.ko[[1]],i-0.5,100,i, col="gray90")#
+	segments(100-f.ko[[1]],i-0.25,100-f.ko[[1]]-f.ko[[2]],i-0.25)#
+	segments(100-f.ko[[1]]-f.ko[[2]],i-0.35,100-f.ko[[1]]-f.ko[[2]],i-0.15)#
+	rect(100,i-0.5,100+f.ko[[3]],i, col="gray10")#
+	segments(100+f.ko[[3]],i-0.25,100+f.ko[[3]]+f.ko[[4]],i-0.25)#
+	segments(100+f.ko[[3]]+f.ko[[4]],i-0.35,100+f.ko[[3]]+f.ko[[4]],i-0.15)#
+	rect(145-f.wt[[1]],i-0.5,145,i, col="gray90")#
+	segments(145-f.wt[[1]],i-0.25,145-f.wt[[1]]-f.wt[[2]],i-0.25)#
+	segments(145-f.wt[[1]]-f.wt[[2]],i-0.35,145-f.wt[[1]]-f.wt[[2]],i-0.15)#
+	rect(145,i-0.5,145+f.wt[[3]],i, col="gray10")#
+	segments(145+f.wt[[3]],i-0.25,145+f.wt[[3]]+f.wt[[4]],i-0.25)#
+	segments(145+f.wt[[3]]+f.wt[[4]],i-0.35,145+f.wt[[3]]+f.wt[[4]],i-0.15)#
+}#
+#
+abline(v=c(10,55,100,145), col="black" , lwd=0.5)#
+axis(1,at=c(10,55,100,145),labels=c("Neil1 KO Male", "wt Male", "Neil1 KO Female", "wt Female"), lwd=0)#
+axis(2, at=(1:8-0.25), labels=lookup.organs$organ.names, lwd=0, las=1, line=-2)#
+#
+axis(1,at=c(0,10,20,30),labels=c("-10", "0", "10", "20"), lwd=0.5, line=-1.5, cex.axis=0.5)#
+axis(1,at=c(45,55,65,75),labels=c("-10", "0", "10", "20"), lwd=0.5, line=-1.5, cex.axis=0.5)#
+axis(1,at=c(90,100,110,120),labels=c("-10", "0", "10", "20"), lwd=0.5, line=-1.5, cex.axis=0.5)#
+axis(1,at=c(135,145,155,165),labels=c("-10", "0", "10", "20"), lwd=0.5, line=-1.5, cex.axis=0.5)#
+frame()#
+plot(-100,-100,xlim=c(0,50), ylim=c(0,(length(run.organs)+1.75)), axes=FALSE, xlab="", ylab="")#
+#
+for (i in 1:length(run.organs)){#
+	ko<-simple.data.ko[i,]#
+	wt<-simple.data.wt[i,]#
+#
+	rect(10-ko[[1]],i-0.6,10,i-0.3, col="moccasin")#
+	segments((10-ko[[1]]),i-0.45,(10-ko[[1]]-ko[[2]]),i-0.45)#
+	segments((10-ko[[1]]-ko[[2]]),i-0.35,(10-ko[[1]]-ko[[2]]),i-0.55)#
+	rect(10,i-0.6,10+ko[[3]],i-0.3, col="orange4")#
+	segments(10+ko[[3]],i-0.45,10+ko[[3]]+ko[[4]],i-0.45)#
+	segments(10+ko[[3]]+ko[[4]],i-0.35,10+ko[[3]]+ko[[4]],i-0.55)#
+	rect(10-wt[[1]],i-0.2,10,i+0.1, col="lightsteelblue1")#
+	segments(10-wt[[1]],i-0.05,10-wt[[1]]-wt[[2]],i-0.05)#
+	segments(10-wt[[1]]-wt[[2]],i+0.05,10-wt[[1]]-wt[[2]],i-0.15)#
+	rect(10,i-0.2,10+wt[[3]],i+0.1, col="darkslategrey")#
+	segments(10+wt[[3]],i-0.05,10+wt[[3]]+wt[[4]],i-0.05)#
+	segments(10+wt[[3]]+wt[[4]],i+0.05,10+wt[[3]]+wt[[4]],i-0.15)#
+}#
+#
+abline(v=c(10), col="black" , lwd=0.5)#
+#
+axis(2, at=(1:8-0.25), labels=lookup.organs$organ.names, lwd=0, las=1, line=-2)#
+#
+axis(1,at=c(0,10,20,30,40, 50),labels=c("-10", "0", "10", "20", "30", "40"), lwd=0.5, line=-1.5, cex.axis=0.5)#
+axis(3,at=c(0,10,20,30,40, 50),labels=c("-10", "0", "10", "20", "30", "40"), lwd=0.5, line=-4, cex.axis=0.5)#
+#
+rect(5,10-0.6,10,10-0.3, col="moccasin")#
+rect(10,10-0.6,10+5,10-0.3, col="orange4")#
+rect(10-5,10-0.2,10,10+0.1, col="lightsteelblue1")#
+rect(10,10-0.2,10+5,10+0.1, col="darkslategrey")#
+#
+text(5.5,9.9, "Neil1 WT", pos=2)#
+text(5.5,9.5, "Neil1 KO", pos=2)#
+indices<-c(rep(1,39), rep(2,40), rep(3,23), rep(4,23), rep(5,40), rep(6,23))#
+type<-indices#
+type[type<7]<-1#
+type[(indices == 1) | (indices == 2) | (indices == 5) ]<-2#
+organ.change.male.ko <-cbind(organ.change.male.ko, indices, type)#
+organ.change.male.ko.type1<-subset(organ.change.male.ko, type==1)#
+organ.change.male.ko.type2<-subset(organ.change.male.ko, type==2)#
+fWTcol<-rgb(167, 47, 43, maxColorValue=255)#
+mWTcol<-rgb(46, 104, 164, maxColorValue=255)#
+fKOcol<-rgb(205, 143, 142, maxColorValue=255)#
+mKOcol<-rgb(143, 166, 203, maxColorValue=255)#
+aWTcol<-rgb(132, 162, 58, maxColorValue=255)#
+aKOcol<-rgb(182, 201, 146, maxColorValue=255)#
+xrange<-c(-10,40)#
+yrange<-c(-0.15,0.07)#
+frame()#
+#
+par(fig=c(0,1,0,1), new=TRUE)#
+#
+par(cex.axis=1.5, cex.lab=1.5, family="sans")#
+plot(organ.change.male.wt, type="p", col = mWTcol, pch=19, cex=0.6, xlim=xrange, ylim=yrange, xlab="", ylab="",tck=.02)#
+points(organ.change.male.ko.type1, type="p", col = mKOcol, pch=8, cex=0.8)#
+points(organ.change.male.ko.type2, type="p", col = mKOcol, pch=1, cex=0.9)#
+abline(v=0,h=0, col="gray60")#
+#
+lines(stats::lowess(organ.change.male.wt, f=0.05), lwd=2, col=mWTcol)#
+lines(stats::lowess(organ.change.male.ko, f=0.05), lwd=2, col=mKOcol)#
+legend("topright", c(expression(italic("R6/1/Neil1"^"+/+")), expression(italic("R6/1/Neil1"^"-/-")), "Population 1 ", "Population 2 " ), pch=c(1,1,8,1), lty=c(1,1,0,0), pt.cex=c(1,0,1,1), lwd=c(2,2,1,1), col=c(mWTcol, mKOcol, mKOcol, mKOcol), bty="n")#
+par(fig=c(0,1,0,1), new=TRUE, mgp = c(2.8,0.6,0))#
+title(main="",ylab="Change in peak size relative to 3 week ear sample", xlab="Distance from main allele (CAG triplets)")#
+xa<-11#
+xb<-19#
+xc<-38.8#
+ya<--0.015-0.003#
+yb<--0.13+0.004#
+> xl<-24.2#
+xh<-40.8#
+yl<-0.002#
+yh<-0.028#
+#
+rect(xl ,yl ,xh ,yh)#
+#
+polyXl<-c(xa,xl,xl,xb)#
+polyYl<-c(ya,yh,yl,ya)#
+#
+polyXr<-c(xc,xh,xh,xc)#
+polyYr<-c(ya,yh,yl,yb)#
+#
+polyCol<-rgb(0.1,0.1,0,1, alpha=.4)#
+#
+polygon(polyXl,polyYl, col=polyCol, border=NA)#
+polygon(polyXr,polyYr, col=polyCol, border=NA)#
+#
+par(fig=c(0.35,0.95,0.1,0.7), new=TRUE)#
+xrange<-c(25,40)#
+yrange<-c(0.005,0.025)#
+plot(organ.change.male.wt, type="p", col = mWTcol, pch=19, yaxt="n", cex=0.5, xlim=xrange, ylim=yrange, xlab="", ylab="", cex.axis=1, tck=.02, mgp = c(2.6,0.55,0))#
+axis(2, at=c(0.01, 0.02),tck=.02)#
+points(organ.change.male.ko, type="p", col = mKOcol, pch=1, cex=0.7)#
+#
+lines(stats::lowess(organ.change.male.wt, f=0.05), lwd=2, col=mWTcol)#
+lines(stats::lowess(organ.change.male.ko, f=0.05), lwd=2, col=mKOcol)
+organ.change.male.wt
+plot(organ.change.male.wt$axis.instability.male.wt)
+plot(organ.change.male.ko.type1$axis.instability.male.wt)
+organ.change.male.ko.type1
+plot(organ.change.male.ko.type1$axis.instability.male.ko)
+plot(organ.change.male.ko.type2$axis.instability.male.ko)
+summaryData<-read.table("/Users/alexarow/Documents/Rikshospitalet/genome_repeats_analysis/data/Med_DMSO/older_analysis/AllSummaryData.txt",  sep="\t", header=TRUE)#
+uniqueOrgans<-sort(unique(summaryData$organ))#
+uniqueOrgans<-uniqueOrgans[uniqueOrgans!="sperm" & uniqueOrgans!="testis"]#
+organName<-c("CE", "CO", "LI", "SP", "KI", "OB", "EA", "ST")#
+organID<-data.frame(uniqueOrgans,organName)#
+summaryData$organ<-organID$organName[match(summaryData$organ,organID$uniqueOrgans)]#
+#
+fWTcol<-rgb(167, 47, 43, maxColorValue=255)#
+mWTcol<-rgb(46, 104, 164, maxColorValue=255)#
+fKOcol<-rgb(205, 143, 142, maxColorValue=255)#
+mKOcol<-rgb(143, 166, 203, maxColorValue=255)#
+aWTcol<-rgb(132, 162, 58, maxColorValue=255)#
+aKOcol<-rgb(182, 201, 146, maxColorValue=255)#
+#
+data<-subset(summaryData, EXPTsource=="NEIL")#
+neilM<-array(0,length(organName))#
+neilMsigma<-array(0,length(organName))#
+neilF<-array(0,length(organName))#
+neilFsigma<-array(0,length(organName))#
+wtM<-array(0,length(organName))#
+wtMsigma<-array(0,length(organName))#
+wtF<-array(0,length(organName))#
+wtFsigma<-array(0,length(organName))#
+diffM_Pval<-array(0,length(organName))#
+diffF_Pval<-array(0,length(organName))#
+#
+for (i in 1:length(organName)) {#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="M"&genotype.1.!="WT", select=instabilityIndex)#
+	neilM[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	neilMsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpNM<-tmp#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="F"&genotype.1.!="WT", select=instabilityIndex)#
+	neilF[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	neilFsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpNF<-tmp#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="M"&genotype.1.=="WT", select=instabilityIndex)#
+	wtM[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	wtMsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpWM<-tmp#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="F"&genotype.1.=="WT", select=instabilityIndex)#
+	wtF[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	wtFsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpWF<-tmp#
+	diffM_Pval[i]<-t.test(tmpNM, tmpWM)$p.value#
+	diffF_Pval[i]<-t.test(tmpNF, tmpWF)$p.value#
+}#
+#
+xmax<-round(max(c(neilM+neilMsigma,neilF+neilFsigma,wtM+wtMsigma,wtF+wtFsigma), na.rm=TRUE), digits=0)+3.5#
+quartz("Quartz %d",width=12,height=7)#
+par(mar=c(0, 0, 1, 1))#
+par(fig=c(0,0.2,0,1), new=TRUE)#
+plot.new()#
+plot.window(xlim=c(-10, 1), ylim=c(-1.5, length(organName)+.5))#
+#
+y <- 1:length(organName)#
+mtext(organName, at=y, adj=1, side=2, las=2, line=-12, cex=1.5)#
+par(fig=c(0.2,0.47,0,1), new=TRUE)#
+plot.new()#
+plot.window(xlim=c(-1, xmax), ylim=c(-1.5, length(organName)+.5))#
+#
+ticks <- seq(-5, xmax, 5)#
+y <- 1:length(organName)#
+h <- 2/length(organName)#
+#
+lines(rep(0, 2), c(0, length(organName)+.5), col="black")#
+rect(0, y-3*h/2, neilM, y, col=mKOcol)#
+segments(neilM, y-3*h/4, neilM+neilMsigma, y-3*h/4)#
+segments(neilM+neilMsigma, y-3*h/2, neilM+neilMsigma, y)#
+rect(0, y, neilF, y+3*h/2, col=fKOcol)#
+segments(neilF, y+3*h/4, neilF+neilFsigma, y+3*h/4)#
+segments(neilF+neilFsigma, y, neilF+neilFsigma, y+3*h/2)#
+#
+par(cex.axis=1, mex=.5)#
+axis(1, at=ticks, labels=abs(ticks), pos=0)#
+#
+tw <- 1.5*strwidth("females")#
+rect(0, -1, tw, -1+1.5*h, col=mKOcol)#
+text(tw, -1+0.75*h, "males", pos=4, cex=1.5)#
+rect(0, -1-1.5*h, tw, -1, col=fKOcol)#
+text(tw, -1-0.75*h, "females", pos=4, cex=1.5)#
+#
+box("inner", col="grey")#
+title(expression(italic("R6/1/Neil1"^"-/-")),cex.main = 1.5, font.main= 1, col.main= "black",line = -2.1, outer = FALSE)#
+par(fig=c(0.47,0.74,0,0.985), new=TRUE)#
+plot.new()#
+plot.window(xlim=c(-1, xmax), ylim=c(-1.5, length(organName)+.5))#
+#
+ticks <- seq(-5, xmax, 5)#
+y <- 1:length(organName)#
+h <- 2/length(organName)#
+#
+lines(rep(0, 2), c(0, length(organName)+.5), col="black")#
+rect(0, y-3*h/2, wtM, y, col=mWTcol)#
+segments(wtM, y-3*h/4, wtM+wtMsigma, y-3*h/4)#
+segments(wtM+wtMsigma, y-3*h/2, wtM+wtMsigma, y)#
+rect(0, y, wtF, y+3*h/2, col=fWTcol)#
+segments(wtF, y+3*h/4, wtF+wtFsigma, y+3*h/4)#
+segments(wtF+wtFsigma, y, wtF+wtFsigma, y+3*h/2)#
+#
+par(cex.axis=1, mex=0.5)#
+axis(1, at=ticks, labels=abs(ticks), pos=0)#
+#
+tw <- 1.5*strwidth("females")#
+rect(0, -1, tw, -1+1.5*h, col=mWTcol)#
+text(tw, -1+0.75*h, "males", pos=4, cex=1.5)#
+rect(0, -1-1.5*h, tw, -1, col=fWTcol)#
+text(tw, -1-0.75*h, "females", pos=4, cex=1.5)#
+#
+box("inner", col="grey")#
+title(expression(italic("R6/1/Neil1"^"+/+")),cex.main = 1.5, font.main= 1, col.main= "black",line = -1, outer = FALSE)#
+Ma<-neilM-wtM#
+Msigma<-wtMsigma+neilMsigma#
+Fe<-neilF-wtF#
+Fsigma<-wtFsigma+neilFsigma#
+#
+par(fig=c(0.74,1,0,0.985), new=TRUE)#
+plot.new()#
+plot.window(xlim=c(-10, 5), ylim=c(-1.5, length(organName)+.5))#
+#
+ticks <- seq(-10, 10, 5)#
+y <- 1:length(organName)#
+h <- 2/length(organName)#
+#
+lines(rep(0, 2), c(-0, length(organName)+.5), col="black")#
+rect(0, y-3*h/2, Ma, y, col=mWTcol, density=20)#
+rect(0, y, Fe, y+3*h/2, col=fWTcol, density=20)#
+par(cex.axis=1, mex=0.5)#
+axis(1, at=ticks, labels=abs(ticks), pos=0)#
+#
+tw <- -1.5*strwidth("females")#
+rect(0, -1, tw, -1+1.5*h, col=mWTcol, density=20)#
+text(tw, -1+0.75*h, "males", pos=2, cex=1.5)#
+rect(0, -1-1.5*h, tw, -1, col=fWTcol, density=20)#
+text(tw, -1-0.75*h, "females", pos=2, cex=1.5)#
+#
+box("inner", col="grey")#
+title(expression(plain("Difference"^"")),cex.main = 1.5, font.main= 1, col.main= "black",line = -1, outer = FALSE)#
+symbM_Pval<-array("",length(organName))#
+symbF_Pval<-array("",length(organName))#
+symbM_Pval[diffM_Pval<0.1]<-"."#
+symbM_Pval[diffM_Pval<0.05]<-"*"#
+symbM_Pval[diffM_Pval<0.01]<-"**"#
+symbF_Pval[diffF_Pval<0.1]<-"."#
+symbF_Pval[diffF_Pval<0.05]<-"*"#
+symbF_Pval[diffF_Pval<0.01]<-"**"#
+xxx<-0.3#
+text(0.25, y-3*h/4-.2+c(0,0,xxx,0,xxx,xxx,0,0), symbM_Pval, pos=4, cex=2)#
+text(0.25, y+3*h/4-.2+c(xxx,0,0,0,0,0,xxx,0), symbF_Pval, pos=4, cex=2)
+neilM
+length(neilM)
+length(neilF)
+length(wtM)
+length(wtF)
+length(organName)
+summaryData
+?melt
+table(summaryData[,1:3])
+table(summaryData[,1])
+table(summaryData[,1:2])
+summaryData<-read.table("/Users/alexarow/Documents/Rikshospitalet/genome_repeats_analysis/data/Med_DMSO/older_analysis/AllSummaryData.txt",  sep="\t", header=TRUE)#
+uniqueOrgans<-sort(unique(summaryData$organ))#
+uniqueOrgans<-uniqueOrgans[uniqueOrgans!="sperm" & uniqueOrgans!="testis"]#
+organName<-c("CE", "CO", "LI", "SP", "KI", "OB", "EA", "ST")#
+organID<-data.frame(uniqueOrgans,organName)#
+summaryData$organ<-organID$organName[match(summaryData$organ,organID$uniqueOrgans)]#
+#
+fWTcol<-rgb(167, 47, 43, maxColorValue=255)#
+mWTcol<-rgb(46, 104, 164, maxColorValue=255)#
+fKOcol<-rgb(205, 143, 142, maxColorValue=255)#
+mKOcol<-rgb(143, 166, 203, maxColorValue=255)#
+aWTcol<-rgb(132, 162, 58, maxColorValue=255)#
+aKOcol<-rgb(182, 201, 146, maxColorValue=255)#
+#
+data<-subset(summaryData, EXPTsource=="NEIL")#
+neilM<-array(0,length(organName))#
+neilMsigma<-array(0,length(organName))#
+neilF<-array(0,length(organName))#
+neilFsigma<-array(0,length(organName))#
+wtM<-array(0,length(organName))#
+wtMsigma<-array(0,length(organName))#
+wtF<-array(0,length(organName))#
+wtFsigma<-array(0,length(organName))#
+diffM_Pval<-array(0,length(organName))#
+diffF_Pval<-array(0,length(organName))#
+#
+for (i in 1:length(organName)) {#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="M"&genotype.1.!="WT", select=instabilityIndex)#
+	neilM[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	neilMsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpNM<-tmp#
+	totNM<-length(tmp)#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="F"&genotype.1.!="WT", select=instabilityIndex)#
+	neilF[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	neilFsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpNF<-tmp#
+	totNF<-length(tmp)#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="M"&genotype.1.=="WT", select=instabilityIndex)#
+	wtM[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	wtMsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpWM<-tmp#
+	totWM<-length(tmp)#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="F"&genotype.1.=="WT", select=instabilityIndex)#
+	wtF[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	wtFsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpWF<-tmp#
+	totWF<-length(tmp)#
+	diffM_Pval[i]<-t.test(tmpNM, tmpWM)$p.value#
+	diffF_Pval[i]<-t.test(tmpNF, tmpWF)$p.value#
+}
+totNF
+totNM
+tmp
+length(tmp)
+dim(tmp)
+dim(tmp)[1]
+summaryData<-read.table("/Users/alexarow/Documents/Rikshospitalet/genome_repeats_analysis/data/Med_DMSO/older_analysis/AllSummaryData.txt",  sep="\t", header=TRUE)#
+uniqueOrgans<-sort(unique(summaryData$organ))#
+uniqueOrgans<-uniqueOrgans[uniqueOrgans!="sperm" & uniqueOrgans!="testis"]#
+organName<-c("CE", "CO", "LI", "SP", "KI", "OB", "EA", "ST")#
+organID<-data.frame(uniqueOrgans,organName)#
+summaryData$organ<-organID$organName[match(summaryData$organ,organID$uniqueOrgans)]#
+#
+fWTcol<-rgb(167, 47, 43, maxColorValue=255)#
+mWTcol<-rgb(46, 104, 164, maxColorValue=255)#
+fKOcol<-rgb(205, 143, 142, maxColorValue=255)#
+mKOcol<-rgb(143, 166, 203, maxColorValue=255)#
+aWTcol<-rgb(132, 162, 58, maxColorValue=255)#
+aKOcol<-rgb(182, 201, 146, maxColorValue=255)#
+#
+data<-subset(summaryData, EXPTsource=="NEIL")#
+neilM<-array(0,length(organName))#
+neilMsigma<-array(0,length(organName))#
+neilF<-array(0,length(organName))#
+neilFsigma<-array(0,length(organName))#
+wtM<-array(0,length(organName))#
+wtMsigma<-array(0,length(organName))#
+wtF<-array(0,length(organName))#
+wtFsigma<-array(0,length(organName))#
+diffM_Pval<-array(0,length(organName))#
+diffF_Pval<-array(0,length(organName))#
+#
+for (i in 1:length(organName)) {#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="M"&genotype.1.!="WT", select=instabilityIndex)#
+	neilM[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	neilMsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpNM<-tmp#
+	totNM<-dim(tmp)[1]#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="F"&genotype.1.!="WT", select=instabilityIndex)#
+	neilF[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	neilFsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpNF<-tmp#
+	totNF<-dim(tmp)[1]#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="M"&genotype.1.=="WT", select=instabilityIndex)#
+	wtM[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	wtMsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpWM<-tmp#
+	totWM<-dim(tmp)[1]#
+	tmp<-subset(data, organ==organName[i]&gender.1.=="F"&genotype.1.=="WT", select=instabilityIndex)#
+	wtF[i]<-mean(tmp$instabilityIndex, na.rm=TRUE)#
+	wtFsigma[i]<-sd(tmp$instabilityIndex, na.rm=TRUE)#
+	tmpWF<-tmp#
+	totWF<-dim(tmp)[1]#
+	diffM_Pval[i]<-t.test(tmpNM, tmpWM)$p.value#
+	diffF_Pval[i]<-t.test(tmpNF, tmpWF)$p.value#
+}#
+#
+c(totNM, totNF, totWM, totWF)
+ss <- function(alpha = 0.05, beta = 0.8, sigma = 2, effect_size = 0.5)
+{ceiling((qnorm(1 - alpha / 2) + qnorm(1 - beta)) ^ 2 * sigma ^ 2 /effect_size ^ 2)}
+dates <- c("02/27/92", "02/27/92", "01/14/92", "02/28/92", "02/01/92")#
+times <- c("23:03:20", "22:29:56", "01:03:30", "18:21:03", "16:56:26")#
+x <- paste(dates, times)#
+strptime(x, "%m/%d/%y %H:%M:%S")
+head(state.x77)
+testDF <- data.frame(v1 = c(1,3,5,7,8,3,5,NA,4,5,7,9),#
+                     v2 = c(11,33,55,77,88,33,55,NA,44,55,77,99) )#
+by1 <- c("red","blue",1,2,NA,"big",1,2,"red",1,NA,12)#
+by2 <- c("wet","dry",99,95,NA,"damp",95,99,"red",99,NA,NA)#
+aggregate(x = testDF, by = list(by1, by2), FUN = "mean")
+aggregate(weight ~ feed, data = chickwts, mean)
+chickwts
+head(seals)
+d=data.frame(x=c(1,2,5,6,8), y=c(3,6,2,8,7), vx=c(1,1.5,0.8,0.5,1.3), vy=c(0.2,1.3,1.7,0.8,1.4))#
+ggplot() + #
+geom_segment(data=d, mapping=aes(x=x, y=y, xend=x+vx, yend=y+vy), arrow=arrow(), size=2, color="blue") +
+library(grid)
+d=data.frame(x=c(1,2,5,6,8), y=c(3,6,2,8,7), vx=c(1,1.5,0.8,0.5,1.3), vy=c(0.2,1.3,1.7,0.8,1.4))#
+ggplot() + #
+geom_segment(data=d, mapping=aes(x=x, y=y, xend=x+vx, yend=y+vy), arrow=arrow(), size=2, color="blue")
+d=data.frame(x=c(1,2,5,6,8), y=c(3,6,2,8,7), vx=c(1,1.5,0.8,0.5,1.3), vy=c(0.2,1.3,1.7,0.8,1.4))#
+ggplot() + #
+geom_segment(data=d, mapping=aes(x=x, y=y, xend=x+vx, yend=y+vy), arrow=arrow(), size=2, color="y")
+d=data.frame(x=c(1,2,5,6,8), y=c(3,6,2,8,7), vx=c(1,1.5,0.8,0.5,1.3), vy=c(0.2,1.3,1.7,0.8,1.4))#
+ggplot() + #
+geom_segment(data=d, mapping=aes(x=x, y=y, xend=x+vx, yend=y+vy), arrow=arrow(), size=2, color=y)
+d=data.frame(x=c(1,2,5,6,8), y=c(3,6,2,8,7), vx=c(1,1.5,0.8,0.5,1.3), vy=c(0.2,1.3,1.7,0.8,1.4))#
+ggplot() + #
+geom_segment(data=d, mapping=aes(x=x, y=y, xend=x+vx, yend=y+vy, color=y), arrow=arrow(), size=2)
+?coef
+require(signal)
+?medfilt1
+ggplot(cars, aes())
+sales<-c(121,78,65,107,150,105,99,142,188,132,123,177,211,166, 205,209)
+quarter<-rep(c("1", "2", "3", "4"),4)
+length(quarter)
+length(sales)
+year<-c(rep("2000",4), rep("2001",4), rep("2002",4), rep("2003",4))
+data.frame(year,quarter,sales)
+data<-data.frame(year,quarter,sales)
+library(ggplot2)
+ggplot(data, aes())
+melt(data)
+ggplot(data, aes(year, sales)) + geom_point()
+1.1*75000
+1.1^4
+1.1+0.75*1.1^2+0.5*1.1^3+0.6666666*1.1^4
+1/1.1
+1/1.1^2
+1/1.1^3
+1/1.1^4
+1.14^3
+cars
+mtcars
+(5*2000+25*1500+30*500+40*1000)/100
+atan(19/25)
+path<-"/Users/alexarow/Dropbox/Projects/RH/EndoV/scanning/results/y80g_pbs10_14_50_34.TIF.txt"#
+data<- read.table(path, header=FALSE, sep="\t")#
+library(rgl)#
+z <- 1 * as.matrix(data)[30:65,25:60] #
+x <- 30 * (1:nrow(z)) #
+y <- 30 * (1:ncol(z)) #
+zlim <- range(y)#
+zlen <- zlim[2] - zlim[1] + 1#
+colorlut <- rainbow(zlen,alpha=0) #
+col <- colorlut[ z-zlim[1]+1 ] #
+open3d()
+path<-"/Users/alexarow/Dropbox/Projects/RH/EndoV/scanning/results/y80g_pbs10_14_50_34.TIF.txt"#
+data<- read.table(path, header=FALSE, sep="\t")#
+library(rgl)#
+z <- 1 * as.matrix(data)[30:65,25:60] #
+x <- 30 * (1:nrow(z)) #
+y <- 30 * (1:ncol(z)) #
+zlim <- range(y)#
+zlen <- zlim[2] - zlim[1] + 1#
+colorlut <- rainbow(zlen,alpha=0) #
+col <- colorlut[ z-zlim[1]+1 ] #
+open3d()#
+rgl.surface(x, y, z, color=col, alpha=0.75, back="lines")
+colorlut <- cm.colors(zlen,alpha=0) #
+col <- colorlut[ z-zlim[1]+1 ] #
+#
+rgl.surface(x, y, z, color=col, alpha=0.75, back="lines")
+colorlut <- cm.colors(zlen,alpha=0) #
+col <- colorlut[ z-zlim[1]+1 ] #
+#
+rgl.surface(x, y, z, color=col, alpha=0.75, back="lines")colorlut <- cm.colors(zlen,alpha=0) #
+col <- colorlut[ z-zlim[1]+1 ] #
+open3d()#
+rgl.surface(x, y, z, color=col, alpha=0.75, back="lines")
+median(z)
+max(z)
+xrange<-c(30:65)#
+yrange<-c(25:60)
+as.matrix(data)[xrange,yrange]
+x <- 1:10#
+y <- rnorm(10)#
+par(mfrow = c(2,1))#
+plot(x, y, main = "approx(.) and approxfun(.)")#
+points(approx(x, y), col = 2, pch = "*")#
+points(approx(x, y, method = "constant"), col = 4, pch = "*")
+x <- 1:10#
+    y <- 30:40#
+    par(mfrow = c(2,1))#
+    plot(x, y, main = "approx(.) and approxfun(.)")#
+    points(approx(x, y), col = 2, pch = "*")#
+    points(approx(x, y, method = "constant"), col = 4, pch = "*")
+x <- 1:10#
+    y <- 31:40#
+    par(mfrow = c(2,1))#
+    plot(x, y, main = "approx(.) and approxfun(.)")#
+    points(approx(x, y), col = 2, pch = "*")#
+    points(approx(x, y, method = "constant"), col = 4, pch = "*")
+x <- 1:10#
+    y <- 31:40#
+    par(mfrow = c(2,1))#
+    plot(x, y, main = "approx(.) and approxfun(.)")#
+    points(approx(x, y), col = 2, pch = "*")#
+    points(approx(x, y, method = "constant"), col = "green", pch = "*")
+y
+approx(y, n=10)
+approx(y, 1:3)
+approx(y, 1:10)
+approx(y, 1:10, n=20)
+approx(y, 1:10, n=19)
+approx(y, n=19)
+approx(yrange, n=19)
+resolution.increase<-2#
+new.xrange<-approx(xrange, (length(xrange)-1)*resolution.increase)
+approx(xrange, n=(length(xrange)-1)*resolution.increase)
+approx(xrange, n=(length(xrange))*resolution.increase)
+approx(xrange, n=(length(xrange)+1)*resolution.increase)
+approx(xrange, n=(length(xrange)*resolution.increase)-1)
+psf <- function(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background) {#
+	f<-function(xm, ym) (1/(2*pi*sigma^2) * exp(-((xm)^2 + (ym)^2)/(2*sigma^2)))#
+	outer(xgrid-xmu,ygrid-ymu,f)*amplitude+background#
+	}
+psf <- function(xgrid, ygrid, xmu, ymu, sigma, amplitude, background) {#
+   	f<-function(xm, ym) (1/(2*pi*sigma^2) * exp(-((xm)^2 + (ym)^2)/(2*sigma^2)))#
+   	outer(xgrid-xmu,ygrid-ymu,f)*amplitude+background#
+   	}
+resolution.increase<-5#
+new.xrange<-approx(xrange, n=(length(xrange)*resolution.increase)-1)$y #
+new.yrange<-approx(yrange, n=(length(yrange)*resolution.increase)-1)$y #
+xmu<-39.444#
+ymu<-47.934#
+sigma<-0.988#
+amplitude<-500#
+background<-250#
+#
+simulated.psf<-psf(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background)#
+open3d()#
+rgl.surface(new.xrange, new.yrange, simulated.psf, color=col, alpha=0.75, back="lines")
+xmu<-39.444#
+ymu<-47.934#
+sigma<-0.988#
+amplitude<-250#
+background<-250#
+#
+simulated.psf<-psf(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background)#
+open3d()#
+rgl.surface(new.xrange, new.yrange, simulated.psf, color=col, alpha=0.75, back="lines")
+new.xrange
+new.yrange
+xmu<-max(xrange)-39.444#
+ymu<-max(yrange)-47.934#
+sigma<-0.988#
+amplitude<-250#
+background<-250#
+#
+simulated.psf<-psf(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background)#
+open3d()#
+rgl.surface(new.xrange, new.yrange, simulated.psf, color=col, alpha=0.75, back="lines")
+xmu<-max(xrange)-(39.444-min(xrange))#
+ymu<-max(yrange)-(47.934-min(yrange))
+xmu
+ymu
+xmu<-max(xrange)-(39.444-min(xrange))#
+ymu<-max(yrange)-(47.934-min(yrange))#
+sigma<-0.988#
+amplitude<-250#
+background<-250#
+#
+simulated.psf<-psf(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background)#
+open3d()#
+rgl.surface(new.xrange, new.yrange, simulated.psf, color=col, alpha=0.75, back="lines")
+xmu<-39.44#
+ymu<-47.934#
+sigma<-1.42#
+amplitude<-250#
+background<-250#
+#
+simulated.psf<-psf(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background)#
+open3d()#
+rgl.surface(new.xrange, new.yrange, simulated.psf, color=col, alpha=0.75, back="lines")
+xmu<-39.44-5#
+ymu<-47.934-5#
+sigma<-1.42#
+amplitude<-250#
+background<-250#
+#
+simulated.psf<-psf(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background)#
+open3d()#
+rgl.surface(new.xrange, new.yrange, simulated.psf, color=col, alpha=0.75, back="lines")
+xmu<-39.44-5#
+ymu<-47.934+5#
+sigma<-1.42#
+amplitude<-250#
+background<-250#
+#
+simulated.psf<-psf(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background)#
+open3d()#
+rgl.surface(new.xrange, new.yrange, simulated.psf, color=col, alpha=0.75, back="lines")
+xmu<-39.44+5#
+ymu<-47.934-5#
+sigma<-1.42#
+amplitude<-250#
+background<-250#
+#
+simulated.psf<-psf(new.xrange, new.yrange, xmu, ymu, sigma, amplitude, background)#
+open3d()#
+rgl.surface(new.xrange, new.yrange, simulated.psf, color=col, alpha=0.75, back="lines")
+image(z)
+image(z, col=colorlut)
+image(z, col=cm.colors)
+image(z, col=heat.colors)
+image(z, col=heat.colors(100))
+image(z, col=cm.colors(100))
+image(z, col=cm.colors(200))
+image(z, col=cm.colors(500))
+image(z, col=cm.colors(50))
+image(z, col=cm.colors(100), yaxt="n", ylab="")
+image(z, col=cm.colors(100), yaxt="n", ylab="", xaxt="n", xlab="")
+rgl.surface(x, y, z, color=col, alpha=0.75)
+yes
+Y
+x <- matrix(runif(100), ncol = 5)#
+group <- sample(1:8, 20, TRUE)#
+(xsum <- rowsum(x, group))
+group
+xsum
+rowSums(x)
+x
+require(ez)
+dat.5 <- read.table("/Users/alexarow/Dropbox/Projects/RH/Gunn/trackplots/test_2507_wt_mo_4.csv", header=TRUE, sep=",")
+dat.5 <- read.table("/Users/alexarow/Dropbox/Projects/RH/Gunn/trackplots/test_2507_wt_mo_4.csv", header=TRUE, sep=",")#
+#
+dat <- dat.5[,c(1,5,6,12,14)]
+summray(dat)
+?colsplit
+colnames(dat) <- c("Time", "X", "Y", "In.Zone", "From.Zone")#
+#
+tmp <- colsplit(dat$Time, ":", c("h", "m", "s"))#
+dat$Time <- tmp$h*3600 + tmp$m*60 + tmp$s
+ggplot(dat, aes(x=X, y=Y, colour=Time, size=From.Zone)) + geom_path()
+ggplot(dat, aes(x=X, y=Y, colour=Time, size=From.Zone+1)) + geom_path()
+ggplot(dat, aes(x=X, y=Y, colour=Time, size=(From.Zone+1) )) + geom_path()
+ggplot(dat, aes(x=X, y=Y, colour=Time, size=From.Zone)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1)
+ggplot(dat, aes(x=X, y=Y, colour=Time, size=From.Zone)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1)
+z <- complex(re=dat$X, im=dat$Y)#
+v <- diff(z)#
+s <- Mod(v)#
+phi <- Arg(v)#
+dv <- diff(v)#
+theta <- Arg(dv)
+head(z)
+head(s)
+head(phi)
+hist(phi)
+hist(s)
+head(dv)
+head(theta)
+hist(theta)
+head(dat.5)
+dat <- dat.5[,c(1,5,6,12,14,16)]#
+#
+colnames(dat) <- c("Time", "X", "Y", "In.Zone", "From.Zone", "Heading.error.to.Platform")#
+#
+tmp <- colsplit(dat$Time, ":", c("h", "m", "s"))#
+dat$Time <- tmp$h*3600 + tmp$m*60 + tmp$s#
+#
+ggplot(dat, aes(x=X, y=Y, colour=Time, size=From.Zone)) + #
+    geom_path(lineend = "round", linejoin = "round", linemitre = 1) + #
+    coord_fixed(ratio = 1)
+ggplot(dat, aes(x=X, y=Y, colour=Heading.error.to.Platform, size=From.Zone)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=X, y=Y, colour=Heading.error.to.Platform, size=From.Zone)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient(limits=c(0, 180), low="green", high="red")
+ggplot(dat, aes(x=X, y=Y, colour=Heading.error.to.Platform, size=Time)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient(limits=c(0, 180), low="green", high="red")
+dim(dat)
+length(z)
+length(v)
+dat <- cbind(dat[2:dim(dat)[1],], z[2:dim(dat)[1]], v, s, phi, dv, theta)
+dat <- cbind(dat[2:dim(dat)[1],], z[2:dim(dat)[1]], v, s, phi, c(dv, NA), c(theta, NA))
+colnames(dat)[c(7,11,12)]
+colnames(dat)[c(7,11,12)] <- c("z", "dv", "theta")
+ggplot(dat, aes(x=Heading.error.to.Platform, y=phi)) + geom_point()
+ggplot(dat, aes(x=Heading.error.to.Platform, y=s)) + geom_point()
+ggplot(dat, aes(x=phi, y=theta)) + geom_point()
+ggplot(dat, aes(x=dv, y=theta)) + geom_point()
+ggplot(dat, aes(x=s, y=theta)) + geom_point()
+ggplot(dat, aes(x=phi, y=s)) + geom_point()
+ggplot(dat, aes(x=phi, y=s, colour=Time)) + geom_point()
+ggplot(dat, aes(x=X, y=Y, colour=Heading.error.to.Platform, size=In.Zone)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient(limits=c(0, 180), low="green", high="red")
+ggplot(dat, aes(x=X, y=Y, colour=phi, size=In.Zone)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient(limits=c(0, 180), low="green", high="red")
+ggplot(dat, aes(x=X, y=Y, colour=phi, size=Time)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient(limits=c(0, 180), low="green", high="red")
+summary(dat)
+ggplot(dat, aes(x=X, y=Y, colour=phi, size=Time)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient(limits=c(-3.14, 3.14), low="green", high="red")
+ggplot(dat, aes(x=X, y=Y, colour=phi, size=Time)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient(limits=c(-3.14, 3.14), low="blue", mid="green" high="red")
+ggplot(dat, aes(x=X, y=Y, colour=phi, size=Time)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient(limits=c(-3.14, 3.14), low="blue", mid="green", high="red")
+dat <- dat.5[,c(1,5,6,12,14,16)]#
+#
+colnames(dat) <- c("Time", "X", "Y", "In.Zone", "From.Zone", "Heading.error.to.Platform")#
+#
+tmp <- colsplit(dat$Time, ":", c("h", "m", "s"))#
+dat$Time <- tmp$h*3600 + tmp$m*60 + tmp$s#
+#
+ggplot(dat, aes(x=X, y=Y, colour=Time, size=From.Zone)) + #
+    geom_path(lineend = "round", linejoin = "round", linemitre = 1) + #
+    coord_fixed(ratio = 1)#
+z <- complex(re=dat$X, im=dat$Y)#
+v <- diff(z)#
+s <- Mod(v)#
+phi <- Arg(v)#
+dv <- diff(v)#
+theta <- Arg(dv)#
+dat <- cbind(dat[2:dim(dat)[1],], z[2:dim(dat)[1]], v, s, phi, c(NA, dv), c(NA, theta))#
+colnames(dat)[c(7,11,12)] <- c("z", "dv", "theta")
+ggplot(dat, aes(x=theta, y=s, colour=Time)) + geom_point()
+ggplot(dat, aes(x=theta, y=s, colour=Time)) + geom_point() + geom_smooth()
+ggplot(dat, aes(x=theta, y=..density, colour=Time)) + geom_histogram()
+ggplot(dat, aes(x=theta, y=..density.., colour=Time)) + geom_histogram()
+ggplot(dat, aes(x=theta, colour=Time)) + geom_histogram()
+ggplot(dat, aes(x=theta, y=..density..)) + geom_histogram()
+ggplot(dat, aes(x=theta, y=..density..)) + geom_histogram(binwidth=0.25)
+ggplot(dat, aes(x=theta, y=..density..)) + geom_histogram(binwidth=0.5)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + geom_point(alpha=0.2)
+ggplot(dat, aes(x=Re(dv), y=Im(dv))) + geom_point(alpha=0.2) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + geom_point(alpha=0.2) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + geom_point(alpha=0.1, size=5) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + geom_point(alpha=0.1, size=15) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + stat_binhex(binwidth = c(1, 1)) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + stat_binhex(binwidth = c(3, 3)) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + stat_binhex(binwidth = c(2, 2)) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + stat_binhex(binwidth = c(2.5, 2.5)) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + stat_binhex(binwidth = c(4, 4)) + coord_fixed(ratio = 1)
+ggplot(dat, aes(x=Re(v), y=Im(v))) + geom_point(alpha=0.1, size=15) + coord_fixed(ratio = 1)ggplot(dat, aes(x=X, y=Y, colour=Time, size=From.Zone)) + #
+    geom_path(lineend = "round", linejoin = "round", linemitre = 1) + #
+    coord_fixed(ratio = 1)
+ggplot(dat, aes(x=X, y=Y, colour=Time, size=From.Zone)) + #
+    geom_path(lineend = "round", linejoin = "round", linemitre = 1) + #
+    coord_fixed(ratio = 1)
+ggplot(dat, aes(x=X, y=Y, colour=Time)) + #
+    geom_path(lineend = "round", linejoin = "round", linemitre = 1) + #
+    coord_fixed(ratio = 1)
+ggplot(dat, aes(x=X, y=Y, colour=phi, size=Time)) + geom_path(lineend = "round", linejoin = "round", linemitre = 1) + coord_fixed(ratio = 1) + scale_colour_gradient2(limits=c(-3.14, 3.14), low="blue", mid="green", high="red")
+ggplot(dat, aes(x=X, y=Y)) + stat_binhex(binwidth = c(4, 4)) + coord_fixed(ratio = 1) + scale_colour_gradient2(limits=c(-3.14, 3.14), low="blue", mid="green", high="red")
+ggplot(dat, aes(x=X, y=Y)) + stat_binhex(binwidth = c(25, 25)) + coord_fixed(ratio = 1) + scale_colour_gradient2(limits=c(-3.14, 3.14), low="blue", mid="green", high="red")
+ggplot(dat, aes(x=X, y=Y)) + stat_binhex(binwidth = c(50, 50)) + coord_fixed(ratio = 1)
+CVAF <- function(V, p.lagmax=0.5){
+CVAF <- function(V, p.lagmax=0.5){#
+lag <- 1:round(length(V)*p.lagmax)#
+cvaf<-mean(Mod(V)^2)#
+for(i in lag)#
+  cvaf[i+1] <- mean(V[-(1:i)] * Conj(V[-((length(V)-i+1):length(V))]))#
+return(data.frame(lag, cvaf))}
+CVAF(v)
+GetPnull <- function(V,re.cvaf=NA,l=0.5)#
+ {#
+      Vbar.null <- mean(V)#
+      myacf<-acf(re.cvaf,lag.max=600,plot=T)$acf#
+      t<-1:length(myacf)-1#
+      HalfPeriod <- t[myacf==min(myacf)]#
+      a2.null <- pi/HalfPeriod#
+      theory <- function(p,t)#
+          return(exp(-p[1]*t) * cos(p[2]*t))#
+      minme <- function(p)#
+         return(sum((theory(p,t)-myacf)^2))#
+      p.null <- c(1,a2.null)#
+      p.hat <- optim(p.null,minme)$par#
+      a1.null <- p.hat[1]#
+      b1.null <- 2*a1.null*(mean(Mod(V)^2)-Mod(Vbar.null)^2)#
+    return(c(a1.null,a2.null,b1.null))#
+ }#
+GetPhat <- function(V,l=0.5)#
+  {#
+    mycvaf <- CVAF(V,l,plot=0)#
+    re.cvaf <- Re(mycvaf)#
+    t <- 1:length(re.cvaf)-1#
+    p.null <- GetPnull(V,re.cvaf)#
+    Vbar <- mean(V)#
+    theory <- function(p,tau=t)#
+    {#
+      a1   <-  p[1]#
+      a2   <-  p[2]#
+      b.squared <- p[3]#
+      return(Mod(Vbar)^2 + (b.squared / (2 * a1)) * exp(-a1*tau) * cos(a2*tau))#
+    }#
+    MinimizeMe <- function(p)#
+      return(sum((theory(p,t)-re.cvaf)^2))#
+    p.hat <- optim(p.null, MinimizeMe)$par#
+    Vbar.hat <- Vbar#
+    a.hat <- complex(re=p.hat[1],im=p.hat[2])#
+    b.hat <- sqrt(p.hat[3])#
+    return(c(Vbar.hat,a.hat,b.hat))#
+  }
+GetPnull(v)
+re.cvaf=NA
+l=0.5
+V <- v
+head(v)
+V <- v[!is.na(v)]
+Vbar.null <- mean(V)#
+      myacf<-acf(re.cvaf,lag.max=600,plot=T)$acf#
+      t<-1:length(myacf)-1#
+      HalfPeriod <- t[myacf==min(myacf)]#
+      a2.null <- pi/HalfPeriod#
+      theory <- function(p,t)#
+          return(exp(-p[1]*t) * cos(p[2]*t))#
+      minme <- function(p)#
+         return(sum((theory(p,t)-myacf)^2))#
+      p.null <- c(1,a2.null)#
+      p.hat <- optim(p.null,minme)$par#
+      a1.null <- p.hat[1]#
+      b1.null <- 2*a1.null*(mean(Mod(V)^2)-Mod(Vbar.null)^2)#
+    return(c(a1.null,a2.null,b1.null))#
+ }
+head(V)
+?acf
+complex(2,2)
+complex(re=2,im=2)
+DBAwalk <- function(muv,alpha,beta,N,scale){#
+  V <- muv#
+  for(i in 1:N){#
+    dV <- alpha*(muv-V[i])/scale +#
+          beta*complex(re=rnorm(1),im=rnorm(1))/sqrt(scale)#
+    V <- c(V,V[i]+dV)}#
+  return(V)}#
+  DBAwalk(0, complex(re=0.1,im=0.4), 0.1, 100, 1)
+tmp <-  DBAwalk(0, complex(re=0.1,im=0.4), 0.1, 1000, 1)
+head(tmp)
+re(head(tmp))
+Re(head(tmp))
+pic <- data.frame(x=Re(tmp), y=Im(tmp) )
+ggplot(pic, aes(x=cumsum(x), y=cumsum(y)) )
+ggplot(pic, aes(x=cumsum(x), y=cumsum(y)) ) + geom_path()
+pic <- data.frame(x=Re(tmp), y=Im(tmp) t=1:length(tmp))
+tmp <-  DBAwalk(0, complex(re=0.1,im=0.1), 0.1, 1000, 1)
+pic <- data.frame(x=Re(tmp), y=Im(tmp), t=1:length(tmp))
+ggplot(pic, aes(x=cumsum(x), y=cumsum(y), colour=t) ) + geom_path() + coord_fixed(ratio = 1)
+z <- tmp
+v <- diff(z)#
+	s <- Mod(v)#
+	phi <- Arg(v)#
+	dv <- diff(v)#
+	theta <- Arg(dv)
+mean(phi)
+mean(theta)
+install.packages("testAR_0.1", repos="/Users/alexarow/Dropbox/github/test")
+install.packages("testAR_0.1", repos="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake")
+install.packages("testAR", repos="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake")
+install.packages("testAR", lib="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake")
+install.packages("testAR_0.1", lib="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake")
+install.packages("testAR_0.1", lib.loc="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake")
+install.packages("testAR", lib.loc="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake")
+install.packages(testAR_0.1, lib.loc="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake")
+install.packages("testAR_0.1.tgz", lib.loc="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake")
+install.packages("testADR_0.1", lib.loc="/Users/alexarow/Dropbox/Projects/RH/StigOve")
+version()
+R.version()
+R.version
+library("testAR_0.1", lib.loc="/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake/")
+testit <- function(x)#
+{#
+    p1 <- proc.time()#
+    Sys.sleep(x)#
+    proc.time() - p1 #
+}#
+testit(3.7)
+require(devtools)
+install("/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake/")
+dir
+testit
+install.packages("/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake/testAR_0.1.tar.gz", repos=NULL, type="binary")
+plotit
+data("/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake/testAR/data/dat.rdata")
+load("/Users/alexarow/Dropbox/Projects/RH/StigOve/uptake/testAR/data/dat.rdata")
+ls()¨
+ls()
+data(raw)
+data(data)
+data('data')
+data('raw')
+install_github("test", "adrowe1")
+require(testAR)
+plotit(dat)
+compare.models(raw)
+plotit <- function ( raw ) {#
+        dat <- reshape2:::melt.data.frame(raw, id.vars=c("type", "time"), variable.name="measurement", value.name="uptake")              #
+        ggplot(dat, aes(x=time*2, y=residuals, colour=type) ) + geom_point() + geom_smooth()#
+}
+dim(raw)
+head(raw)
+dat <- reshape2:::melt.data.frame(raw, id.vars=c("type", "time"), variable.name="measurement", value.name="uptake")
+ggplot(dat, aes(x=time*2, y=residuals, colour=type) ) + geom_point() + geom_smooth()
+head(dat)
+ggplot(dat, aes(x=time*2, y=residuals, colour=type) ) + geom_point()
+str(dat)
+shpmlraw<-raw
+save(shpmlraw, file="shpmlraw.rda")
+plotit <- function ( raw ) {#
+        dat <- reshape2:::melt.data.frame(raw, id.vars=c("type", "time"), variable.name="measurement", value.name="uptake")              #
+        model <- lm(uptake ~time * type, dat) #
+        dat$pred <- predict(model, dat)#
+        dat$residuals <- dat$uptake-dat$pred#
+        ggplot(dat, aes(x=time*2, y=residuals, colour=type) ) + geom_point() + geom_smooth()#
+}
+plotit(raw)
