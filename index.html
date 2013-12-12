@@ -40,16 +40,15 @@
 </ol><h3>
 <a name="r-code-snippet" class="anchor" href="#r-code-snippet"><span class="octicon octicon-link"></span></a>R Code snippet</h3>
 
-<pre><code>TukeyHSD(aov(Distance ~ Treatment, dat3), method="holm")
-TukeyHSD(aov(Time.mobile ~ Treatment, dat3), method="holm")
-</code></pre>
+<div class="highlight highlight-R"><pre><span class="c">library(ggplot2)</span>
+<span class="c">tmp &lt;- c(1,3,5:10)</span>
+<span class="c">TukeyHSD(aov(Distance ~ Treatment, dat3), method="holm")</span>
+<span class="c">TukeyHSD(aov(Time.mobile ~ Treatment, dat3), method="holm")</span>
+</pre></div>
 
 <p>The code bears no relation to the package</p>
 
-<h3>
-<a name="a-picture" class="anchor" href="#a-picture"><span class="octicon octicon-link"></span></a>A picture</h3>
-
-<p><img src="https://raw.github.com/adrowe1/test/master/images/mandelbrot.jpg" alt="random image"></p>
+<hr><p><img src="https://raw.github.com/adrowe1/test/master/images/mandelbrot.jpg" alt="random image"></p>
 
 <p><strong>End</strong></p>
       </section>
