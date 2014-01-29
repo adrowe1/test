@@ -18,7 +18,7 @@ qqplot.data <- function (vec)
 
 }
 
-
+#does this commit?
 
 compare.models <- function ( raw ) {
       dat <- reshape2:::melt.data.frame(raw, id.vars=c("type", "time"), variable.name="measurement", value.name="uptake")
