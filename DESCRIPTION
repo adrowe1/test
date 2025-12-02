@@ -3,8 +3,8 @@ Title: how to make a package
 Description: a first attempt
 URL: http://dna.uio.no/adr
 Version: 0.1
-Maintainer: Alexander Rowe <a.rowe1@gmail.com>
-Author: Alexander Rowe <a.rowe1@gmail.com>
+Maintainer: AR <>
+Author: AR <>
 Depends: R (>= 2.11.0)
 License: MIT
 LazyLoad: yes
